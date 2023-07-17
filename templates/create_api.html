@@ -1,0 +1,35 @@
+{% extends 'main.html' %}
+{% block title %}Api creator{% endblock %}
+
+{% block body %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+
+    <h1 class="mt-5">Add Your api...</h1>
+      <p class="lead">Here, You can simply add Your own api and share the link. Then You can call it using whatever request library You want. Simple example
+          <div style="margin-left:30px"><code>{<br>
+            "name": John<br>
+            "message": "It's good to see You"<br>
+            }</code>
+          </div>
+      </p>
+
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+        {{ form.author.label() }}
+        {{ form.author(class="form-control") }}
+
+        {{ form.api_body.label() }}
+        {{ form.api_body(class="form-control", rows=10) }}<br>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+
+{% endblock %}
