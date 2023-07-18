@@ -1,0 +1,10 @@
+This is app, where You can simply create Your own API without creating server or code anything.
+Just go to the Add Api section and paste Your json formatted data. Click submit, and we will generate
+a specific endpoint which will be ready to return Your data.
+
+Used:
+- Python
+- Flask
+- Bootstrap
+- Html
+- Css
