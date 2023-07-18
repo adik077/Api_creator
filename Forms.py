@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, SubmitField, EmailField, PasswordField
+from wtforms import StringField, SubmitField, EmailField, PasswordField
 from wtforms.validators import DataRequired, EqualTo
 from wtforms.widgets import TextArea
 
 
 class CreateApiForm(FlaskForm):
+    description = StringField('Description', validators=[DataRequired()])
     api_body = StringField('Api Body', validators=[DataRequired()], widget=TextArea())
-    author = IntegerField('Author', validators=[DataRequired()])
     submit = SubmitField('Submit')
 
 

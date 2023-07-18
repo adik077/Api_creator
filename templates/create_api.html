@@ -23,8 +23,9 @@
 
     <form method="post">
         {{ form.hidden_tag() }}
-        {{ form.author.label() }}
-        {{ form.author(class="form-control") }}
+
+        {{ form.description.label() }}
+        {{ form.description(class="form-control") }}
 
         {{ form.api_body.label() }}
         {{ form.api_body(class="form-control", rows=10) }}<br>

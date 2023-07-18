@@ -33,8 +33,9 @@ def add_api():
     if request.method == 'POST':
         if form.validate_on_submit():
             api_body = form.api_body.data
-            author = form.author.data
-            new_api = CreateApi(api_body=api_body, author=author)
+            author = current_user.id
+            description = form.description.data
+            new_api = CreateApi(api_body=api_body, author=author, description=description)
             try:
                 db.session.add(new_api)
                 db.session.commit()
@@ -50,7 +51,8 @@ def add_api():
 @app.route('/dashboard', methods=['GET'])
 @login_required
 def dashboard():
-    return render_template('dashboard.html', current_user=current_user)
+    users_endpoints = CreateApi.query.filter_by(author=current_user.id)
+    return render_template('dashboard.html', users_endpoints=users_endpoints)
 
 
 @app.route('/endpoint/<int:endpoint_id>', methods=['GET'])
@@ -109,7 +111,8 @@ def logout():
 class CreateApi(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     api_body = db.Column(db.String(), nullable=False)
-    author = db.Column(db.Integer, nullable=False)
+    description = db.Column(db.String(100), nullable=False)
+    author = db.Column(db.Integer, db.ForeignKey('user.id'))
     added_date = db.Column(db.DateTime, default=datetime.utcnow())
 
     def __repr__(self):
@@ -124,6 +127,7 @@ class User(db.Model, UserMixin):
     login = db.Column(db.String(50), nullable=False, unique=True)
     password_hash = db.Column(db.String(128))
     date_added = db.Column(db.DateTime, default=datetime.utcnow())
+    user_apis = db.relationship('CreateApi', backref='api')
 
     @property
     def password(self):

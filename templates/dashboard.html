@@ -16,6 +16,10 @@
 
       </p>
 
+    {% for endpoint in users_endpoints %}
+        <a href="{{ url_for('return_api_endpoint', endpoint_id = endpoint.id) }}">{{ endpoint.description }}</a>
+    {% endfor %}
+
 
 
 
