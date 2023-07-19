@@ -55,6 +55,19 @@ def dashboard():
     return render_template('dashboard.html', users_endpoints=users_endpoints)
 
 
+@app.route('/remove_endpoint/<int:endpoint_id>', methods=['GET'])
+@login_required
+def remove_endpoint(endpoint_id):
+    endpoint = CreateApi.query.get_or_404(endpoint_id)
+    if endpoint.author == current_user.id:
+        db.session.delete(endpoint)
+        db.session.commit()
+        flash('Endpoint removed successfully...')
+        return redirect(url_for('dashboard'))
+    else:
+        return render_template('unauthorized_request.html')
+
+
 @app.route('/endpoint/<int:endpoint_id>', methods=['GET'])
 def return_api_endpoint(endpoint_id):
     endpoint = CreateApi.query.filter_by(id=endpoint_id).first()

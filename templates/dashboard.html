@@ -20,14 +20,15 @@
     <tr>
         <th scope="col">Description</th>
         <th scope="col">Creation date</th>
+        <th scope="col">Remove</th>
     </tr>
     </thead>
     <tbody>
     {% for endpoint in users_endpoints %}
     <tr>
-        <td><a href="{{ url_for('return_api_endpoint', endpoint_id = endpoint.id) }}">{{ endpoint.description }}</a>
-        </td>
+        <td><a href="{{ url_for('return_api_endpoint', endpoint_id = endpoint.id) }}">{{ endpoint.description }}</a></td>
         <td>{{ endpoint.added_date }}</td>
+        <td><a href="{{ url_for('remove_endpoint', endpoint_id = endpoint.id) }}">Remove</a></td>
     </tr>
     {% endfor %}
     </tbody>
