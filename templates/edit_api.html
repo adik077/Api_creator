@@ -1,0 +1,36 @@
+{% extends 'main.html' %}
+{% block title %}Api creator{% endblock %}
+
+{% block body %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{message}}
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+    {% endfor %}
+
+    <h1 class="mt-5">Edit api...</h1>
+      <p class="lead">Here, You can simply edit created api. Simple example
+          <div style="margin-left:30px"><code>{<br>
+            "name": John<br>
+            "message": "It's good to see You"<br>
+            }</code>
+          </div>
+      </p>
+
+
+    <form method="post">
+        {{ form.hidden_tag() }}
+
+        {{ form.description.label() }}
+        {{ form.description(class="form-control", value=endpoint.description) }}
+
+        {{ form.api_body.label() }}
+        <textarea class="form-control" id="api_body" name="api_body" required rows="10">{{ endpoint.api_body }}</textarea><br>
+
+        {{ form.submit(class="btn btn-primary") }}
+    </form>
+
+{% endblock %}

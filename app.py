@@ -68,6 +68,24 @@ def remove_endpoint(endpoint_id):
         return render_template('unauthorized_request.html')
 
 
+@app.route('/edit_endpoint/<int:endpoint_id>', methods=['GET', 'POST'])
+@login_required
+def edit_endpoint(endpoint_id):
+    endpoint = CreateApi.query.get_or_404(endpoint_id)
+    form = CreateApiForm()
+    if request.method == 'POST':
+        if endpoint.author == current_user.id:
+            endpoint.description = form.description.data
+            endpoint.api_body = form.api_body.data
+            db.session.commit()
+            flash('Endpoint edited successfully...')
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template('unauthorized_request.html')
+    else:
+        return render_template('edit_api.html', form=form, endpoint=endpoint)
+
+
 @app.route('/endpoint/<int:endpoint_id>', methods=['GET'])
 def return_api_endpoint(endpoint_id):
     endpoint = CreateApi.query.filter_by(id=endpoint_id).first()
